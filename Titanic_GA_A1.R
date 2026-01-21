@@ -54,3 +54,55 @@ titanic$Pclass <- factor(titanic$Pclass,
 
 # =============================================================================
 
+# Imputiert fehlende Werte in der Variable „Age“ mithilfe der erzeugten
+# Variable „Anrede“ über ein Imputationsverfahren eurer Wahl
+# (z.B. arithmetisches Mittel,Median, usw.)
+
+?median
+
+# Medianes Alter für die gruppierten Anreden berechnen
+median(titanic$Age[titanic$Anrede %in% c("Miss.", "Ms.", "Mlle.")],
+       na.rm = TRUE)
+## 21
+median(titanic$Age[titanic$Anrede %in% c("Mrs.", "Mme.", "Lady.",
+                                       "the Countess.")], na.rm = TRUE)
+## 35
+median(titanic$Age[titanic$Anrede %in% "Master."], na.rm = TRUE)
+## 3.5
+median(titanic$Age[titanic$Anrede %in% c("Mr.", "Don.", "Sir.", "Jonkheer.",
+                                         "Rev.", "Dr.")], na.rm = TRUE)
+## 30
+
+
+# NA-Werte für young_woman ersetzen
+titanic$Age[is.na(titanic$Age) &
+              titanic$Anrede %in% c("Miss.", "Ms.", "Mlle.")
+            ] <- median(titanic$Age[titanic$Anrede %in%
+                                      c("Miss.", "Ms.", "Mlle.")], na.rm = TRUE)
+
+# NA-Werte für older_woman ersetzen
+titanic$Age[is.na(titanic$Age) &
+              titanic$Anrede %in% c("Mrs.", "Mme.", "Lady.",
+                                    "the Countess.")
+            ] <- median(titanic$Age[titanic$Anrede %in%
+                          c("Mrs.", "Mme.", "Lady.", "the Countess.")],
+                            na.rm = TRUE)
+
+# NA-Werte für boys ersetzen
+titanic$Age[is.na(titanic$Age) & titanic$Anrede %in% "Master."
+            ] <- median(titanic$Age[titanic$Anrede %in% "Master."],
+                        na.rm = TRUE)
+
+# NA-Werte für adult_men ersetzen
+titanic$Age[is.na(titanic$Age) &
+              titanic$Anrede %in% c("Mr.", "Don.", "Sir.", "Jonkheer.", "Rev.",
+                                    "Dr.")
+            ] <- median(titanic$Age[titanic$Anrede %in%
+                          c("Mr.", "Don.", "Sir.", "Jonkheer.", "Rev.", "Dr.")],
+                            na.rm = TRUE)
+
+# Test ob alle NA-Werte ersetzt wurden
+sum(is.na(titanic$Age))
+
+# =============================================================================
+
