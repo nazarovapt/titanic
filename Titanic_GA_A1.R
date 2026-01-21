@@ -1,10 +1,10 @@
-# ============================================================
+# ============================================================================= 
 # Titel:    Analyse der Verkaufsdaten
 # Datei:    analyse_verkauf.R
 # Autoren:  Meico Bastian Heil, Saskia Lapkowski
 # Datum:    2026-01-21
 # Zweck:    Datenaufbereitung und Auswertung
-# ============================================================
+# ============================================================================= 
 
 #Datensatz einlesen
 titanic <- read.csv("~/titanic.csv")
@@ -31,3 +31,24 @@ older_woman <- titanic$Anrede %in% c("Mrs.", "Mme.", "Lady.", "the Countess.")
 boys <- titanic$Anrede == "Master."
 adult_men <- titanic$Anrede %in% c("Mr.", "Don.", "Sir.", "Jonkheer.")
 
+# ============================================================================= 
+
+# Codiert die Variablen „Survived“, „Sex“, „Embarked“ als factor um.
+
+
+?as.factor
+
+# Die drei Spalten "Survived", "Sex", "Embarked" in Faktoren umwandeln
+titanic$Survived <- as.factor(titanic$Survived)
+titanic$Sex <- as.factor(titanic$Sex)
+titanic$Embarked <- as.factor(titanic$Embarked)
+
+# ============================================================================= 
+
+# Überführt die Variable „Pclass“ in einen ordered-factor. (ordinal mit 1>2>3)
+
+titanic$Pclass <- factor(titanic$Pclass,
+                         levels = c(3,2,1),
+                         ordered = TRUE)
+
+# =============================================================================
