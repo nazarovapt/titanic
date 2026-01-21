@@ -29,7 +29,8 @@ unique(titanic$Anrede)
 young_woman <- titanic$Anrede %in% c("Miss.", "Ms.", "Mlle.")
 older_woman <- titanic$Anrede %in% c("Mrs.", "Mme.", "Lady.", "the Countess.")
 boys <- titanic$Anrede == "Master."
-adult_men <- titanic$Anrede %in% c("Mr.", "Don.", "Sir.", "Jonkheer.")
+adult_men <- titanic$Anrede %in% c("Mr.", "Don.", "Sir.", "Jonkheer.", "Rev.",
+                                   "Dr.")
 
 # ============================================================================= 
 
@@ -52,3 +53,4 @@ titanic$Pclass <- factor(titanic$Pclass,
                          ordered = TRUE)
 
 # =============================================================================
+
