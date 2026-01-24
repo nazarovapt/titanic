@@ -106,3 +106,34 @@ sum(is.na(titanic$Age))
 
 # =============================================================================
 
+# Extrahiert aus der Variable „Cabin“ die folgenden Informationen und erzeugt
+# neue Variablen hierfür:
+# - Backbord oder Steuerbord? Tipp: Kabinen mit einer ungeraden
+#   Nummer liegen auf Steuerbord, die anderen auf Backbord.
+# - Deck: Vorangehender Buchstabe der Kabinennummer
+# - Einträge mit unbekannter Kabinennummer, d.h. „“ setzt ihr auf NA.
+
+
+# Es wird in den Cabin-Einträgen nach Zahlen gesucht und nur die werden in
+# cabin_nums gespeichert
+cabin_nums <- gsub(".*([0-9]+)", "\\1", titanic$Cabin)
+
+# Einträge ohne Kabinennumer werden auf NA gesetzt
+cabin_nums[cabin_nums == titanic$Cabin] <- NA
+
+# Char in num umwandeln um rechnen zu können
+cabin_nums <- as.numeric(cabin_nums)
+
+# Gerade Zahlen sind backbord, ungerade steuerbord
+# In backbord und steuerbord werden die Kabinen gespeichert
+backbord <- titanic[cabin_nums %% 2 == 0 & !is.na(cabin_nums), 11]
+steuerbord <- titanic[cabin_nums %% 2 == 1 & !is.na(cabin_nums), 11]
+
+# Es werden die Buchstaben extrahiert und in deck gespeichert
+deck <- gsub("([A-Z]).*", "\\1", titanic$Cabin)
+
+# Einträge ohne Kabinennummer werden auf NA gesetzt
+deck[deck == ""] <- NA
+
+# =============================================================================
+
