@@ -146,4 +146,16 @@ titanic <- titanic [, !names(titanic) %in% "Ticket"]
 titanic <- titanic [, !names(titanic) %in% "Cabin"]
 
 # =============================================================================
+# Speichert das R-Skript, sowie den neuen Datensatz in dem GitHub-Repository
+# ab.
+
+?write.csv()
+
+# data.frame neu zuweisen
+titanic_new <- titanic
+
+# CSV-Datei erstellen, die den Datensatz beinhaltet
+write.csv(titanic_new, "titanic_new", row.names = FALSE)
+
+# =============================================================================
 
