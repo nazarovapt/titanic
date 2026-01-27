@@ -155,7 +155,7 @@ titanic <- titanic [, !names(titanic) %in% "Cabin"]
 titanic_new <- titanic
 
 # CSV-Datei erstellen, die den Datensatz beinhaltet
-write.csv(titanic_new, "titanic_new", row.names = FALSE)
+write.csv(titanic_new, "titanic_new.csv", row.names = FALSE)
 
 # =============================================================================
 
