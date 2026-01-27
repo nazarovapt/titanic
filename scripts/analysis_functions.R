@@ -1,11 +1,9 @@
 # ============================================================================= 
-# Titel:    Analyse der Verkaufsdaten
-# Datei:    analyse_verkauf.R
-# Autoren: (i), (iii) Nazarov Sergei
-#          (ii), (iv) Heetae Kim
-#          (v) Meico Bastian Heil, Saskia Lapkowski
-# Datum:    2026-01-27
-# Zweck:    Datenaufbereitung und Auswertung
+# Titel:    Funktionen zur deskriptiven Analyse und Visualisierung
+#           des Titanic-Datensatzes
+# Autoren:  (i), (iii) Nazarov Sergei
+#           (ii), (iv) Heetae Kim
+#           (v) Meico Bastian Heil, Saskia Lapkowski
 # ============================================================================= 
 
 # Hilfsfunktionen laden
@@ -13,7 +11,7 @@ source("helper_functions.R")
 
 # (i)
 
-# num_summary - Berechnet zentrale deskriptive Statistiken für
+# numSummary berechnet einfache deskriptive Statistiken für
 #                            metrische Variablen eines Dataframes
 #
 # Input:  df        - Datenframe mit den Variablen
@@ -26,7 +24,7 @@ source("helper_functions.R")
 #           min      - Minimum
 #           max      - Maximum
 
-num_summary <- function(df, variablen) {
+numSummary <- function(df, variablen) {
   result <- data.frame()
   
   for (var in variablen) {
@@ -46,6 +44,35 @@ num_summary <- function(df, variablen) {
   result
 }
 
+# (iii)
+
+# catBivSummary berechnet bivariate deskriptive Statistiken für zwei 
+#               kategoriale Variablen
+#
+# Input:  df   - data.frame mit den Variablen
+#         var1 - erste kategoriale Variable (Zeilen)
+#         var2 - zweite kategoriale Variable (Spalten)
+# Output: Liste mit:
+#           counts  - absolute Häufigkeiten (Kreuztabelle)
+#           percent - relative Häufigkeiten (Zeilenprozente)
+
+catBivSummary <- function(df, var1, var2) {
+  
+  # Kreuztabelle mit absoluten Häufigkeiten
+  counts <- table(df[[var1]], df[[var2]])
+  
+  # Berechnung der Zeilensummen
+  row_totals <- rowSums(counts)
+  
+  # Relative Häufigkeiten pro Zeile
+  percent <- counts / row_totals
+  percent <- round(percent, 3)
+  
+  list(
+    counts = counts,
+    percent = percent
+  )
+}
 
 
 
