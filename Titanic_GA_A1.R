@@ -61,45 +61,32 @@ titanic$Pclass <- factor(titanic$Pclass,
 ?median
 
 # Medianes Alter für die gruppierten Anreden berechnen
-median(titanic$Age[titanic$Anrede %in% c("Miss.", "Ms.", "Mlle.")],
-       na.rm = TRUE)
+median(titanic$Age[young_woman], na.rm = TRUE)
 ## 21
-median(titanic$Age[titanic$Anrede %in% c("Mrs.", "Mme.", "Lady.",
-                                       "the Countess.")], na.rm = TRUE)
+median(titanic$Age[older_woman], na.rm = TRUE)
 ## 35
-median(titanic$Age[titanic$Anrede %in% "Master."], na.rm = TRUE)
+median(titanic$Age[boys], na.rm = TRUE)
 ## 3.5
-median(titanic$Age[titanic$Anrede %in% c("Mr.", "Don.", "Sir.", "Jonkheer.",
-                                         "Rev.", "Dr.")], na.rm = TRUE)
+median(titanic$Age[adult_men], na.rm = TRUE)
 ## 30
 
 
 # NA-Werte für young_woman ersetzen
-titanic$Age[is.na(titanic$Age) &
-              titanic$Anrede %in% c("Miss.", "Ms.", "Mlle.")
-            ] <- median(titanic$Age[titanic$Anrede %in%
-                                      c("Miss.", "Ms.", "Mlle.")], na.rm = TRUE)
+# NA-Werte für young_woman ersetzen
+titanic$Age[is.na(titanic$Age) & young_woman] <- median(titanic$Age[young_woman]
+                                                        , na.rm = TRUE)
 
 # NA-Werte für older_woman ersetzen
-titanic$Age[is.na(titanic$Age) &
-              titanic$Anrede %in% c("Mrs.", "Mme.", "Lady.",
-                                    "the Countess.")
-            ] <- median(titanic$Age[titanic$Anrede %in%
-                          c("Mrs.", "Mme.", "Lady.", "the Countess.")],
-                            na.rm = TRUE)
+titanic$Age[is.na(titanic$Age) & older_woman] <- median(titanic$Age[older_woman]
+                                                        ,na.rm = TRUE)
 
 # NA-Werte für boys ersetzen
-titanic$Age[is.na(titanic$Age) & titanic$Anrede %in% "Master."
-            ] <- median(titanic$Age[titanic$Anrede %in% "Master."],
-                        na.rm = TRUE)
+titanic$Age[is.na(titanic$Age) & boys] <- median(titanic$Age[boys],
+                                                 na.rm = TRUE)
 
 # NA-Werte für adult_men ersetzen
-titanic$Age[is.na(titanic$Age) &
-              titanic$Anrede %in% c("Mr.", "Don.", "Sir.", "Jonkheer.", "Rev.",
-                                    "Dr.")
-            ] <- median(titanic$Age[titanic$Anrede %in%
-                          c("Mr.", "Don.", "Sir.", "Jonkheer.", "Rev.", "Dr.")],
-                            na.rm = TRUE)
+titanic$Age[is.na(titanic$Age) & adult_men] <- median(titanic$Age[adult_men], 
+                                                      na.rm = TRUE)
 
 # Test ob alle NA-Werte ersetzt wurden
 sum(is.na(titanic$Age))
@@ -158,4 +145,5 @@ titanic_new <- titanic
 write.csv(titanic_new, "titanic_new", row.names = FALSE)
 
 # =============================================================================
+
 
