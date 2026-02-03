@@ -127,10 +127,8 @@ deck[deck == ""] <- NA
 # Entfernt am Ende die Variablen „PassengerID“, „Name“, „Ticket“ und „Cabin“
 # aus dem Datensatz
 
-titanic <- titanic [, !names(titanic) %in% "PassengerId"]
-titanic <- titanic [, !names(titanic) %in% "Name"]
-titanic <- titanic [, !names(titanic) %in% "Ticket"]
-titanic <- titanic [, !names(titanic) %in% "Cabin"]
+titanic <- titanic [, !names(titanic) %in% c("PassengerId", "Name", "Ticket", "Cabin")]
+
 
 # =============================================================================
 # Speichert das R-Skript, sowie den neuen Datensatz in dem GitHub-Repository
@@ -145,5 +143,6 @@ titanic_new <- titanic
 write.csv(titanic_new, "titanic_new", row.names = FALSE)
 
 # =============================================================================
+
 
 
