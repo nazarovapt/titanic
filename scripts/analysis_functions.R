@@ -143,7 +143,6 @@ library(ggplot2)
 # Jetzt sind alle kategorialen Variablen Faktoren
 titanic_new$Anrede <- as.factor(titanic_new$Anrede)
 
-
 plot_categorical_faceted <- function(data, var_x, var_fill, var_facet1,
                                      var_facet2 = NULL) {
   
