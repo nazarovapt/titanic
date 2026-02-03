@@ -159,4 +159,30 @@ plot_categorical_faceted <- function(data, var_x, var_fill, var_facet1,
   }
 # =============================================================================
 
-
+# Eigentliche Funktion um facettiertes Balkendiagramm zu plotten
+  p <- ggplot(
+    data = data,
+    aes_string(x = var_x, fill = var_fill)
+  ) +
+    geom_bar(position = "fill") +
+    labs(
+      x = var_x,
+      y = "Relative Häufigkeit",
+      fill = var_fill
+    ) +
+    theme_minimal()
+  
+  # Facettierung
+  if (is.null(var_facet2)) {
+    # 3 Variablen -> eine Facette
+    p <- p + facet_wrap(as.formula(paste("~", var_facet1)))
+  } else {
+    # 4 Variablen -> Grid-Facettierung
+    p <- p + facet_grid(
+      as.formula(paste(var_facet2, "~", var_facet1))
+    )
+  }
+  
+  return(p)
+}
+# =============================================================================
