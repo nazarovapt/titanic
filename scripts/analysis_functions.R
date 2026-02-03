@@ -134,8 +134,29 @@ metricDichoSummary <- function(df, metric_var, group_var) {
 # =============================================================================
 
 # =============================================================================
-# (v)
-#                 --- Hier schreiben Meico & Saskia ihre Funktion ---
+# (v) 
+# Eine Funktion, die eine geeignete Visualisierung von drei oder vier
+# kategorialen Variablen erstellt
+  
+library(ggplot2)
+
+# Jetzt sind alle kategorialen Variablen Faktoren
+titanic_new$Anrede <- as.factor(titanic_new$Anrede)
+
+
+plot_categorical_faceted <- function(data, var_x, var_fill, var_facet1,
+                                     var_facet2 = NULL) {
+  
+  vars <- c(var_x, var_fill, var_facet1, var_facet2)
+  # Prüfen ob vars leer ist
+  vars <- vars[!is.null(vars)]
+  
+  # Prüft anhand von Faktor ob Variable kategorial ist
+  for (v in vars) {
+    if (!is.factor(data[[v]])) {
+      stop(paste("Variable", v, "ist nicht kategorial."))
+    }
+  }
 # =============================================================================
 
 
