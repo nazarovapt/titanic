@@ -157,8 +157,7 @@ plot_categorical_faceted <- function(data, var_x, var_fill, var_facet1,
       stop(paste("Variable", v, "ist nicht kategorial."))
     }
   }
-# =============================================================================
-
+  
 # Eigentliche Funktion um facettiertes Balkendiagramm zu plotten
   p <- ggplot(
     data = data,
