@@ -83,6 +83,8 @@ catSummary <- function(df, var) {
 #           percent - relative Häufigkeiten (Zeilenprozente)
 
 catBivSummary <- function(df, var1, var2) {
+  # Entfernt Zeilen mit NA
+  df <- df[complete.cases(df[, c(var1, var2)]), ]
   
   # Kreuztabelle mit absoluten Häufigkeiten
   counts <- table(df[[var1]], df[[var2]])
@@ -143,6 +145,7 @@ metricDichoSummary <- function(df, metric_var, group_var) {
 # kategorialen Variablen erstellt
   
 library(ggplot2)
+titanic_new <- read.csv("../titanic_new.csv")
 
 # Jetzt sind alle kategorialen Variablen Faktoren
 titanic_new$Anrede <- as.factor(titanic_new$Anrede)
