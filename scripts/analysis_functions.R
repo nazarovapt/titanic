@@ -14,10 +14,12 @@ source("helper_functions.R")
 # numSummary berechnet einfache deskriptive Statistiken für
 #                            metrische Variablen eines Dataframes
 #
-# Input:  df        - Datenframe mit den Variablen
+# Input:  df        - Dataframe mit den Variablen
 #         variablen - Vektor mit Spaltennamen der numerischen Variablen
 # Output: data.frame mit Spalten:
 #           variable - Name der Variable
+#           mean     - Mittelwert
+#           median   - Median
 #           sd       - Standardabweichung
 #           min      - Minimum
 #           max      - Maximum
@@ -30,9 +32,11 @@ numSummary <- function(df, variablen) {
     if (is.numeric(x)) {
       result <- rbind(result, data.frame(
         variable = var,
-        sd = sd(x, na.rm = TRUE),
-        min = min(x, na.rm = TRUE),
-        max = max(x, na.rm = TRUE)
+        mean   = mean(x, na.rm = TRUE),
+        median = median(x, na.rm = TRUE),
+        sd     = sd(x, na.rm = TRUE),
+        min    = min(x, na.rm = TRUE),
+        max    = max(x, na.rm = TRUE)
       ))
     }
   }
