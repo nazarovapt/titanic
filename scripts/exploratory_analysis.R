@@ -43,6 +43,7 @@ num_summary
 # hindeutet, dass die meisten Passagiere alleine oder mit wenigen Angehörigen
 # gereist sind.
 
+# Visualisierung
 # Histogramm des Ticketpreises
 hist(titanic$Fare,
      breaks = 30,
@@ -78,6 +79,9 @@ cat_results$Embarked
 # Hinsichtlich der Einschiffungshäfen zeigt sich, dass der größte Anteil
 # der Passagiere in Southampton eingeschifft ist.
 
+# Visualisierung
+par(mfrow = c(2, 2), mar = c(4, 4, 3, 1))
+
 # Überlebensstatus der Passagiere
 barplot(
   table(titanic$Survived),
@@ -86,14 +90,10 @@ barplot(
   xlab = "Überlebensstatus",
   ylab = "Anzahl der Passagiere",
   col = "lightgreen",
-  ylim = c(0, max(table(titanic$Survived)) + 50)
+  ylim = c(0, max(table(titanic$Survived)) * 1.15)
 )
-text(
-  x = c(0.7, 1.9),
-  y = table(titanic$Survived),
-  labels = table(titanic$Survived),
-  pos = 3
-)
+text(seq_along(table(titanic$Survived)), table(titanic$Survived), 
+     labels = table(titanic$Survived), pos = 3)
 
 # Geschlecht der Passagiere
 barplot(
@@ -102,14 +102,10 @@ barplot(
   xlab = "Geschlecht",
   ylab = "Anzahl der Passagiere",
   col = c("lightpink", "lightblue"),
-  ylim = c(0, max(table(titanic$Sex)) + 50)
+  ylim = c(0, max(table(titanic$Sex)) * 1.15)
 )
-text(
-  x = c(0.7, 1.9),
-  y = table(titanic$Sex),
-  labels = table(titanic$Sex),
-  pos = 3
-)
+text(seq_along(table(titanic$Sex)), table(titanic$Sex), 
+     labels = table(titanic$Sex), pos = 3)
 
 # Passagierklassen der Passagiere
 barplot(
@@ -118,16 +114,24 @@ barplot(
   xlab = "Passagierklasse",
   ylab = "Anzahl der Passagiere",
   col = c("lightblue", "lightgreen", "lightgray"),
-  ylim = c(0, max(table(titanic$Pclass)) + 50)
+  ylim = c(0, max(table(titanic$Pclass)) * 1.15)
 )
+text(seq_along(table(titanic$Pclass)), table(titanic$Pclass), 
+     labels = table(titanic$Pclass), pos = 3)
 
-# Anzahl über den Balken anzeigen
-text(
-  x = c(0.7, 1.9, 3.1),
-  y = table(titanic$Pclass),
-  labels = table(titanic$Pclass),
-  pos = 3
+# Einschiffungshäfen der Passagiere
+barplot(
+  table(titanic$Embarked),
+  main = "Einschiffungshäfen der Passagiere",
+  xlab = "Einschiffungshafen",
+  ylab = "Anzahl der Passagiere",
+  col = "lightgray",
+  ylim = c(0, max(table(titanic$Embarked)) * 1.15)
 )
+text(seq_along(table(titanic$Embarked)), table(titanic$Embarked), 
+     labels = table(titanic$Embarked), pos = 3)
+
+par(mfrow = c(1, 1))
 # =============================================================================
 
 # =============================================================================
