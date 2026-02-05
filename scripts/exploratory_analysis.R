@@ -36,12 +36,11 @@ num_summary
 # Interpretation:
 # Die durchschnittliche Altersstruktur der Passagiere liegt bei etwa 29 Jahren,
 # wobei die Altersspanne von Säuglingen bis zu sehr alten Personen reicht.
-# Der Ticketpreis (Fare) weist eine sehr hohe Streuung auf, was durch die große
+# Der Ticketpreis weist eine sehr hohe Streuung auf, was durch die große
 # Standardabweichung und den hohen Maximalwert deutlich wird. Dies deutet auf
 # eine stark rechtsschiefe Verteilung der Ticketpreise hin.
-# Die Variablen SibSp und Parch zeigen niedrige Mittelwerte, was darauf
-# hindeutet, dass die meisten Passagiere alleine oder mit wenigen Angehörigen
-# gereist sind.
+# Die Variablen SibSp und Parch zeigen niedrige Mittelwerte, was darauf hindeutet, 
+# dass die meisten Passagiere alleine oder mit wenigen Angehörigen gereist sind.
 
 # Visualisierung
 # Histogramm des Ticketpreises
@@ -135,7 +134,109 @@ par(mfrow = c(1, 1))
 # =============================================================================
 
 # =============================================================================
-# 3.
+# 3. Bivariate deskriptive Statistik für zwei kategoriale Variablen
+
+# Überlebensanteile nach Geschlecht
+# Survived vs. Sex 
+biv_surv_sex <- catBivSummary(titanic, "Survived", "Sex")
+biv_surv_sex$counts     # absolute Häufigkeiten
+biv_surv_sex$percent    # Zeilenprozente pro Survived-Gruppe
+# Interpretation:
+# Unter den Überlebenden ist der Anteil der Frauen deutlich höher als der der Männer.
+# Unter den Nicht-Überlebenden ist der Anteil der Männer größer.
+# Visualisierung
+par(mar = c(5, 5, 4, 2), oma = c(4, 0, 0, 0))
+barplot(
+  t(biv_surv_sex$percent),
+  beside = FALSE,
+  main = "Überlebensstatus nach Geschlecht",
+  xlab = "Geschlecht",
+  ylab = "Anteil",
+  ylim = c(0, 1),
+  col = c("grey80", "grey40"),
+  names.arg = colnames(biv_surv_sex$percent),
+  border = "white"
+)
+par(xpd = NA)  
+legend(
+  x = 0.8, y = -0.15,  
+  legend = c("Nicht überlebt", "Überlebt"),
+  fill = c("grey80", "grey40"),
+  horiz = TRUE,
+  bty = "n",
+  cex = 1
+)
+par(xpd = FALSE)
+
+
+# Überlebensanteile nach Passagierklasse
+# Survived vs. Pclass 
+biv_class_surv <- catBivSummary(titanic, "Pclass", "Survived")
+biv_class_surv$counts     # absolute Häufigkeiten
+biv_class_surv$percent    # Zeilenprozente innerhalb jeder Klasse
+# Interpretation:
+# Die Zeilenprozente zeigen deutliche Unterschiede zwischen den Klassen:
+# In der 1. Klasse ist der Anteil der Überlebenden höher als in der 2. und 3. Klasse.
+# In der 3. Klasse ist der Anteil der Nicht-Überlebenden am höchsten.
+# Visualisierung
+par(mar = c(5, 5, 4, 2), oma = c(4, 0, 0, 0))
+barplot(
+  t(biv_class_surv$percent),
+  beside = FALSE,
+  main = "Überlebensstatus nach Passagierklasse",
+  xlab = "Passagierklasse",
+  ylab = "Anteil",
+  ylim = c(0, 1),
+  col = c("grey80", "grey40"),
+  names.arg = rownames(biv_class_surv$percent),
+  border = "white"
+)
+par(xpd = NA)  
+
+legend(
+  x = 1.1, y = -0.15,  
+  legend = c("Nicht überlebt", "Überlebt"),
+  fill = c("grey80", "grey40"),
+  horiz = TRUE,
+  bty = "n",
+  cex = 1
+)
+par(xpd = FALSE)
+
+
+# Passagierklassen nach Einschiffungshafen
+# Embarked vs. Pclass 
+biv_emb_class <- catBivSummary(titanic, "Embarked", "Pclass")
+# Leere Einschiffungshäfen als NA behandeln
+titanic$Embarked[titanic$Embarked == ""] <- NA
+biv_emb_class$counts
+biv_emb_class$percent <- biv_emb_class$percent[rownames(biv_emb_class$percent) != "", ]
+biv_emb_class$percent
+# Interpretation:
+# Passagiere aus Cherbourg gehörten häufiger der ersten Klasse an, was auf einen 
+# höheren sozioökonomischen Status hindeutet und den höheren Überlebensanteil erklären kann.
+# Visualisierung
+par(mar = c(5, 5, 4, 2), oma = c(4, 0, 0, 0))
+barplot(
+  t(biv_emb_class$percent),
+  beside = FALSE,
+  main = "Passagierklassen nach Einschiffungshafen",
+  xlab = "Einschiffungshafen",
+  ylab = "Anteil",
+  ylim = c(0, 1),
+  col = c("lightblue", "lightgreen", "lightgray"),
+  names.arg = rownames(biv_emb_class$percent),
+  border = "white"
+)
+par(xpd = NA) 
+legend(
+  x = 0.9, y = -0.15,
+  legend = c("1. Klasse", "2. Klasse", "3. Klasse"),
+  fill = c("lightblue", "lightgreen", "lightgray"),
+  horiz = TRUE,
+  bty = "n"
+)
+par(xpd = FALSE)
 # =============================================================================
 
 # =============================================================================
