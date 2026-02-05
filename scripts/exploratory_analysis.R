@@ -28,9 +28,11 @@ source("analysis_functions.R")
 
 # =============================================================================
 # 1. Deskriptive Statistik für metrische Variablen
+
 num_vars <- c("Age", "Fare", "SibSp", "Parch")
 num_summary <- numSummary(titanic, num_vars)
 num_summary
+
 # Interpretation:
 # Die durchschnittliche Altersstruktur der Passagiere liegt bei etwa 29 Jahren,
 # wobei die Altersspanne von Säuglingen bis zu sehr alten Personen reicht.
@@ -51,7 +53,81 @@ hist(titanic$Fare,
 # =============================================================================
 
 # =============================================================================
-# 2. 
+# 2. Deskriptive Statistik für kategoriale Variablen
+cat_vars <- c("Survived", "Sex", "Pclass", "Embarked")
+
+cat_results <- lapply(cat_vars, function(v) {
+  catSummary(titanic, v)
+})
+
+names(cat_results) <- cat_vars
+
+# Ergebnisse anzeigen
+cat_results$Survived
+cat_results$Sex
+cat_results$Pclass
+cat_results$Embarked
+
+# Interpretation:
+# Insgesamt war der Anteil der Passagiere, die die Katastrophe nicht überlebt 
+# haben, höher als der Anteil der Überlebenden.
+# In Bezug auf die Geschlechterverteilung befanden sich deutlich mehr männliche 
+# als weibliche Passagiere an Bord. Zudem reiste der Großteil der Passagiere 
+# in der dritten Klasse, während Passagiere der ersten Klasse vergleichsweise 
+# selten vertreten waren.
+# Hinsichtlich der Einschiffungshäfen zeigt sich, dass der größte Anteil
+# der Passagiere in Southampton eingeschifft ist.
+
+# Überlebensstatus der Passagiere
+barplot(
+  table(titanic$Survived),
+  names.arg = c("Nicht überlebt", "Überlebt"),
+  main = "Überlebensstatus der Passagiere",
+  xlab = "Überlebensstatus",
+  ylab = "Anzahl der Passagiere",
+  col = "lightgreen",
+  ylim = c(0, max(table(titanic$Survived)) + 50)
+)
+text(
+  x = c(0.7, 1.9),
+  y = table(titanic$Survived),
+  labels = table(titanic$Survived),
+  pos = 3
+)
+
+# Geschlecht der Passagiere
+barplot(
+  table(titanic$Sex),
+  main = "Geschlechterverteilung der Passagiere",
+  xlab = "Geschlecht",
+  ylab = "Anzahl der Passagiere",
+  col = c("lightpink", "lightblue"),
+  ylim = c(0, max(table(titanic$Sex)) + 50)
+)
+text(
+  x = c(0.7, 1.9),
+  y = table(titanic$Sex),
+  labels = table(titanic$Sex),
+  pos = 3
+)
+
+# Passagierklassen der Passagiere
+barplot(
+  table(titanic$Pclass),
+  main = "Passagierklassen der Passagiere",
+  xlab = "Passagierklasse",
+  ylab = "Anzahl der Passagiere",
+  col = c("lightblue", "lightgreen", "lightgray"),
+  ylim = c(0, max(table(titanic$Pclass)) + 50)
+)
+
+# Anzahl über den Balken anzeigen
+text(
+  x = c(0.7, 1.9, 3.1),
+  y = table(titanic$Pclass),
+  labels = table(titanic$Pclass),
+  pos = 3
+)
 # =============================================================================
 
 # =============================================================================
