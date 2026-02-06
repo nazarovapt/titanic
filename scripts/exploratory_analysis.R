@@ -22,8 +22,9 @@ source("analysis_functions.R")
 # 1. Deskriptive Statistiken für metrische Variablen (Age, Fare, SibSp, Parch)
 # 2. Deskriptive Statistiken für kategoriale Variablen (Survived, Sex, Pclass)
 # 3. Zusammenhang zwischen zwei kategorialen Variablen (z.B. Survived und Sex)
-# 4. 
-# 5.
+# 4. Bivariate deskriptive Statistik: metrisch × dichotom (z.B. Age und Fare)
+# 5. Visualisierung von drei oder vier kategorialen Variablen (z.B. Pclass, 
+#    Embarked, Survived)
 # 6.
 # =============================================================================
 
@@ -242,6 +243,8 @@ par(xpd = FALSE)
 
 # =============================================================================
 # 4. Bivariate deskriptive Statistik: metrisch × dichotom
+# Unterscheidet sich das Alter und der Ticketpreis der Passagiere in 
+# Abhängigkeit vom Überlebensstatus?
 
 # Lokale Kopie
 df4 <- titanic
@@ -281,6 +284,23 @@ fare_survival_summary
 
 # =============================================================================
 # 5. Visualisierung von drei bzw. vier kategorialen Variablen
+# Wie hängen Passagierklasse, Einschiffungshafen und Überlebensstatus
+# zusammen und unterscheidet sich das nach Geschlecht?
+
+# Lokale Kopie
+df5 <- titanic
+df5$Pclass   <- factor(df5$Pclass)
+df5$Survived <- factor(df5$Survived, levels = c(0,1),
+                       labels = c("Nicht überlebt","Überlebt"))
+df5$Embarked <- factor(df5$Embarked)
+df5$Sex      <- factor(df5$Sex)
+
+# Facettiertes Balkendiagramm: 3 Variablen
+plot_categorical_faceted(df5,
+                         var_x = "Pclass",
+                         var_fill = "Survived",
+                         var_facet1 = "Embarked") + 
+  ggtitle("Überlebensstatus nach Passagierklasse und Einschiffungshafen")
 # =============================================================================
 
 # =============================================================================
