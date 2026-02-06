@@ -24,7 +24,7 @@ source("analysis_functions.R")
 # 3. Zusammenhang zwischen zwei kategorialen Variablen (z.B. Survived und Sex)
 # 4. Bivariate deskriptive Statistik: metrisch × dichotom (z.B. Age und Fare)
 # 5. Visualisierung von drei oder vier kategorialen Variablen (z.B. Pclass, 
-#    Embarked, Survived)
+#    Embarked, Survived, Sex)
 # 6.
 # =============================================================================
 
@@ -280,6 +280,12 @@ par(mfrow = c(1,1))
 age_survival_summary
 fare_survival_summary
 
+# Interpretation:
+# Beide Boxplots zeigen deutliche Unterschiede zwischen Überlebenden und
+# Nicht-Überlebenden. Überlebende sind im Median jünger und haben im
+# Durchschnitt höhere Ticketpreise gezahlt. Dies deutet darauf hin,
+# dass sowohl Alter als auch finanzieler Status einen Einfluss
+# auf die Überlebenswahrscheinlichkeit hatten.
 # =============================================================================
 
 # =============================================================================
@@ -301,6 +307,27 @@ plot_categorical_faceted(df5,
                          var_fill = "Survived",
                          var_facet1 = "Embarked") + 
   ggtitle("Überlebensstatus nach Passagierklasse und Einschiffungshafen")
+
+# Interpretation:
+# Das facettierte Diagramm zeigt, dass der Überlebensstatus stark von der
+# Passagierklasse abhängt: Passagiere der 1. Klasse überleben häufiger,
+# während Passagiere der 3. Klasse am seltensten überleben. Zudem unterscheiden
+# sich die Überlebensanteile je nach Einschiffungshafen: Passagiere aus 
+# Cherbourg haben tendenziell höhere Überlebensraten als diejenigen aus
+# Southampton oder Queenstown.
+
+# Facettiertes Balkendiagramm: 4 Variablen
+plot_categorical_faceted(df5,
+                         var_x = "Pclass",
+                         var_fill = "Survived",
+                         var_facet1 = "Embarked",
+                         var_facet2 = "Sex") +   
+  ggtitle("Überlebensstatus nach Passagierklasse, Einschiffungshafen und Geschlecht")
+
+# Interpretation:
+# Unter zusätzlicher Berücksichtigung des Geschlechts zeigt sich,
+# dass Frauen in allen Klassen und Häfen höhere Überlebensanteile
+# aufweisen. Der Einfluss der Passagierklasse bleibt weiter bestehen.
 # =============================================================================
 
 # =============================================================================
