@@ -1,9 +1,10 @@
 # =============================================================================
 # Titel:    Deskriptive Analyse und Visualisierung des aufgeräumten 
 #           Titanic-Datensatzes
-# Autoren:  Heetae Kim, CIA, Nazarov Sergei
+# Autoren:  Heetae Kim (i - iii), 
+#           Leticia Kwanga (iv - vi), 
+#           Nazarov Sergei (LaTeX)
 # =============================================================================
-
 
 # vorbereiteter Datensatz und Analysefunktionen laden
 titanic <- read.csv("../titanic_new.csv", stringsAsFactors = TRUE)
@@ -21,7 +22,7 @@ source("analysis_functions.R")
 # 1. Deskriptive Statistiken für metrische Variablen (Age, Fare, SibSp, Parch)
 # 2. Deskriptive Statistiken für kategoriale Variablen (Survived, Sex, Pclass)
 # 3. Zusammenhang zwischen zwei kategorialen Variablen (z.B. Survived und Sex)
-# 4.
+# 4. 
 # 5.
 # 6.
 # =============================================================================
@@ -240,11 +241,46 @@ par(xpd = FALSE)
 # =============================================================================
 
 # =============================================================================
-# 4. 
+# 4. Bivariate deskriptive Statistik: metrisch × dichotom
+
+# Lokale Kopie
+df4 <- titanic
+
+# Typzuweisungen
+df4$Survived <- factor(df4$Survived, levels = c(0,1),
+                       labels = c("Nicht überlebt","Überlebt"))
+df4$Age  <- as.numeric(as.character(df4$Age))
+df4$Fare <- as.numeric(as.character(df4$Fare))
+
+# NA lokal entfernen
+df4 <- remove_na(df4, c("Age", "Fare", "Survived"))
+
+# Deskriptive Statistik
+age_survival_summary  <- metricDichoSummary(df4, "Age", "Survived")
+fare_survival_summary <- metricDichoSummary(df4, "Fare", "Survived")
+
+# Boxplots
+par(mfrow = c(1,2))
+boxplot(Age ~ Survived, data = df4,
+        names = levels(df4$Survived),
+        col = c("lightgray","lightgreen"),
+        main = "Alter nach Überlebensstatus",
+        xlab = "Überlebensstatus", ylab = "Alter")
+
+boxplot(Fare ~ Survived, data = df4,
+        names = levels(df4$Survived),
+        col = c("lightgray","lightgreen"),
+        main = "Ticketpreis nach Überlebensstatus",
+        xlab = "Überlebensstatus", ylab = "Ticketpreis")
+par(mfrow = c(1,1))
+
+age_survival_summary
+fare_survival_summary
+
 # =============================================================================
 
 # =============================================================================
-# 5. 
+# 5. Visualisierung von drei bzw. vier kategorialen Variablen
 # =============================================================================
 
 # =============================================================================
