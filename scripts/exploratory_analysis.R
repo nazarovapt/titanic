@@ -25,7 +25,8 @@ source("analysis_functions.R")
 # 4. Bivariate deskriptive Statistik: metrisch × dichotom (z.B. Age und Fare)
 # 5. Visualisierung von drei oder vier kategorialen Variablen (z.B. Pclass, 
 #    Embarked, Survived, Sex)
-# 6.
+# 6. Analyse einer metrischen Variable nach kategorialer Gruppierung (z.B. Age 
+#    nach Passagierklasse)
 # =============================================================================
 
 # =============================================================================
