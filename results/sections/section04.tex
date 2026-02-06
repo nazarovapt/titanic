@@ -1,0 +1,167 @@
+\section{Ergebnisse}
+
+\subsection*{1. Deskriptive Statistik der metrischen Variablen}
+
+Die deskriptive Analyse der metrischen Variablen ergibt:
+
+\begin{center}
+\begin{tabular}{lccccc}
+Variable & Mittelwert & Median & SD & Min & Max \\
+\hline
+Age  & 29.37 & 30.00 & 13.25 & 0.42 & 80.00 \\
+Ticketpreis & 32.20 & 14.45 & 49.69 & 0.00 & 512.33 \\
+\end{tabular}
+\end{center}
+
+Das durchschnittliche Alter der Passagiere beträgt etwa 29 Jahre.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{fare.png}
+    \end{center}
+    \caption{Histogramm der Ticketpreise (Fare)}
+    \label{fig:fare_histogram}
+\end{figure}
+
+Der Ticketpreis weist eine rechtsschiefe Verteilung auf. Der Mittelwert liegt bei 32,
+der Median nur bei 14. 
+
+\subsection*{2. Deskriptive Statistik der kategorialen Variablen}
+
+\begin{itemize}
+    \item \textbf{Überlebensstatus:} Die Mehrheit der Passagiere hat die Katastrophe nicht überlebt.
+
+    \begin{center}
+\begin{tabular}{lcc}
+Kategorie & Anzahl & Anteil (\%) \\
+\hline
+Nicht überlebt & 549 & 61.6 \\
+Überlebt       & 342 & 38.4 \\
+\end{tabular}
+\end{center}
+
+    \item \textbf{Geschlecht:} Deutlich mehr männliche als weibliche Passagiere an Bord.
+    
+    \begin{center}
+\begin{tabular}{lcc}
+Geschlecht & Anzahl & Anteil (\%) \\
+\hline
+weiblich & 314 & 35.2 \\
+männlich & 577 & 64.8 \\
+\end{tabular}
+\end{center}
+
+    \item \textbf{Passagierklasse:} Die Mehrheit reiste in der dritten Klasse.
+    
+    \begin{center}
+\begin{tabular}{lcc}
+Klasse & Anzahl & Anteil (\%) \\
+\hline
+1. Klasse & 216 & 24.2 \\
+2. Klasse & 184 & 20.7 \\
+3. Klasse & 491 & 55.1 \\
+\end{tabular}
+\end{center}
+
+    \item \textbf{Einschiffungshafen:} Die meisten Passagiere stiegen in Southampton ein.
+    
+\begin{center}
+\begin{tabular}{lcc}
+Hafen & Anzahl & Anteil (\%) \\
+\hline
+C & 168 & 18.9 \\
+Q & 77  & 8.6 \\
+S & 644 & 72.3 \\
+\end{tabular}
+\end{center}
+\end{itemize}
+Abb. 2 zeigt eine allgemeine Übersicht
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{kombo1.png}
+    \caption{Übersicht der Passagierkategorien}
+\end{figure}
+
+\subsection*{3. Bivariate deskriptive Statistik für zwei kategoriale Variablen}
+
+\textbf{Überlebensstatus nach Geschlecht:} Unter den Überlebenden ist der Anteil der Frauen deutlich höher; unter den Nicht-Überlebenden überwiegen die Männer.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.50\textwidth]{survived_sex_bar.png}
+    \caption{Überlebensstatus nach Geschlecht (Anteil)}
+    \label{fig:survived_sex}
+\end{figure}
+    
+\textbf{Überlebensstatus nach Passagierklasse:} In der 1. Klasse überleben deutlich mehr Passagiere, während die 3. Klasse den höchsten Anteil Nicht-Überlebender aufweist.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.50\textwidth]{survived_class_bar.png}
+    \caption{Überlebensstatus nach Passagierklasse (Anteil)}
+    \label{fig:survived_class}
+\end{figure}
+    
+\textbf{Passagierklasse nach Einschiffungshafen:} Passagiere aus Cherbourg gehörten häufiger der 1. Klasse an, was auf einen höheren sozioökonomischen Status hindeutet (Abb. 5).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.50\textwidth]{class_embarked_bar.png}
+    \caption{Passagierklasse nach Einschiffungshafen}
+    \label{fig:class_embarked}
+\end{figure}
+
+
+\textbf{Überlebensraten nach Anrede:}
+\begin{center}
+\begin{tabular}{lcc}
+Anrede & Nicht überlebt & Überlebt \\
+\hline
+Mr.     & 436 & 81  \\
+Miss.   & 55  & 127 \\
+Mrs.    & 26  & 99  \\
+Master. & 17  & 23  \\
+Andere  & 18  & 12  \\
+\end{tabular}
+\end{center}
+
+Die Anrede zeigt deutliche Unterschiede im Überleben: Miss und Mrs. sind mit höheren Überlebensraten verbunden, während die Mehrheit der Mr.-Passagiere nicht überlebte.
+
+\subsection*{4. Bivariate deskriptive Statistik}
+Unterscheidet sich das Alter und der Ticketpreis der Passagiere in Abhängigkeit vom Überlebensstatus?
+
+\textbf{Alter:} Überlebende sind im Median etwas jünger als Nicht-Überlebende. 
+
+\textbf{Ticketpreis:} Überlebende haben im Durchschnitt höhere Ticketpreise gezahlt
+
+
+Dies deutet darauf hin, dass sowohl Alter als auch finanzieler Status einen Einfluss
+auf die Überlebenswahrscheinlichkeit hatten.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{age_fare_survived_boxes.png}
+    \caption{Alter und Ticketpreis nach Überlebensstatus}
+    \label{fig:age_survived}
+\end{figure}
+
+\subsection*{5. Visualisierung von mehreren kategorialen Variablen}
+
+\textbf{Überlebensstatus nach Passagierklasse, Einschiffungshafen und Geschlecht:} Frauen weisen in allen Klassen und Häfen höhere Überlebensanteile auf. Der Einfluss der Passagierklasse bleibt weiterhin bestehen.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{survived_pclass_embarked_sex.png}
+    \caption{Überlebensstatus nach Passagierklasse, Ein-
+schiffungshafen und Geschlecht}
+    \label{fig:age_pclass}
+\end{figure}
+
+\subsection*{6.Weitere Analyse}
+Unterscheidet sich das Alter der Passagiere zwischen den drei Klassen?
+
+Passagiere der ersten Klasse sind im Median älter als die der dritten Klasse.
+Die Streuung ist ähnlich, aber in der dritten Klasse gibt es einige sehr junge Passagiere.
+
+

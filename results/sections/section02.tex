@@ -1,0 +1,27 @@
+\section{Daten} \label{sec:daten}
+
+Die Daten stammen aus der Titanic-Datenbank und wurden für die Analyse bereinigt und vereinheitlicht. Die wichtigsten Variablen nach der Aufbereitung sind in Tabelle I zusammengefasst.
+\begin{table}[h!]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lll}
+\hline
+\textbf{Spalte} & \textbf{Bedeutung / Inhalt} & \textbf{Format} \\
+\hline
+Survived & Überlebt? Ja (1) / Nein (0) & factor \\
+Pclass & Passagierklasse (1 = 1., 2 = 2., 3 = 3.) & ordered factor \\
+Sex & Geschlecht des Passagiers & factor \\
+Age & Alter in Jahren & numeric \\
+SibSp & Anzahl Geschwister / Ehepartner an Bord & numeric \\
+Parch & Anzahl Eltern / Kinder an Bord & numeric \\
+Fare & Ticketpreis & numeric \\
+Embarked & Einschiffungshafen (C / Q / S) & factor \\
+Anrede & Anrede / Titel aus dem Namen & factor \\
+\hline
+\end{tabular}%
+}
+\caption{Struktur der Titanic-Daten}
+\label{tab:datenstruktur}
+\end{table}
+
+Nach der Bereinigung wurden fehlende Werte behandelt und die Variablen in geeignete Formate konvertiert, sodass sie für die Analyse in R genutzt werden können.

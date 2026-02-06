@@ -1,0 +1,38 @@
+\documentclass[a4paper, amsfonts, amssymb, amsmath, reprint, showkeys, nofootinbib, twoside]{revtex4-1}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos, color=green!40, prependcaption]{todonotes}
+\input{preamble}
+\usepackage[pdftex, pdftitle={Article}, pdfauthor={Author}]{hyperref} % For hyperlinks in the PDF
+%\setlength{\marginparwidth}{2.5cm}
+\bibliographystyle{apsrev4-1}
+\begin{document}
+\title{Kurzbericht: Analyse der Titanic-Daten}
+
+\author{Meico Bastian Heil}
+\author{Saskia Lapkowski}
+\author{Heetae Kim}
+\author{Leticia Kwanga}
+\author{Sergei Nazarov}
+    \affiliation{Technische Universität Dortmund}
+
+\date{08.02.2026} % Leave empty to omit a date
+
+\begin{abstract}
+In dieser Arbeit wurde der Titanic-Datensatz im Rahmen einer Gruppenarbeit mithilfe von GitHub und R analysiert.  
+Die Daten wurden zunächst bereinigt und sinnvoll transformiert, um fehlende Werte zu imputieren und neue Variablen zu erstellen.  
+Anschließend wurden deskriptive und bivariate Analysen durchgeführt, um Faktoren zu identifizieren, die das Überleben der Passagiere beeinflussen, insbesondere Geschlecht, Passagierklasse und Ticketpreis.
+\end{abstract}
+
+\maketitle
+
+\input{sections/section01.tex}   
+\input{sections/section02.tex}
+\input{sections/section03.tex}
+\input{sections/section04.tex}
+
+\section{Fazit}
+
+Alter, Geschlecht und Passagierklasse zeigen deutliche Zusammenhänge mit der Überlebenswahrscheinlichkeit. Frauen und Passagiere höherer Klassen überlebten häufiger, während das Alter einen moderaten Einfluss zeigt. Diese Faktoren sind damit die wichtigsten Prädiktoren für das Überleben auf der Titanic.
+
+\end{document}
