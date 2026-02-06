@@ -86,8 +86,12 @@ catSummary <- function(df, var) {
 #           percent - relative Häufigkeiten (Zeilenprozente)
 
 catBivSummary <- function(df, var1, var2) {
+  var_exist(df, c(var1,var2))
+  is_factor(df[[var1]], var1)
+  is_factor(df[[var2]], var2)
   # Entfernt Zeilen mit NA
-  df <- df[complete.cases(df[, c(var1, var2)]), ]
+  #df <- df[complete.cases(df[, c(var1, var2)]), ]
+  df <- remove_na(df, c(var1, var2))
   
   # Kreuztabelle mit absoluten Häufigkeiten
   counts <- table(df[[var1]], df[[var2]])
@@ -121,16 +125,29 @@ catBivSummary <- function(df, var1, var2) {
 #           mean  - Arithmetisches Mittel der metrischen Variable
 #           sd    - Standardabweichung der metrischen Variable
 metricDichoSummary <- function(df, metric_var, group_var) {
-  d <- df[, c(metric_var, group_var)]
-  d <- d[complete.cases(d), ]
-  names(d) <- c("metric", "group")
-  d$group <- factor(d$group)
+  var_exist(df, c(metric_var, group_var))
   
-  if (length(levels(d$group)) != 2) stop("group_var muss dichotom sein.")
+  #d <- df[, c(metric_var, group_var)]
+  #d <- d[complete.cases(d), ]
+  #names(d) <- c("metric", "group")
+  #d$group <- factor(d$group)
+  #if (length(levels(d$group)) != 2) stop("group_var muss dichotom sein.")
   
-  out <- by(d$metric, d$group, function(x)
+  # Metric in numerisch umwandeln
+  df[[metric_var]] <- as.numeric(as.character(df[[metric_var]]))
+  is_numeric(df[[metric_var]], metric_var)
+  
+  # Group in Faktor umwandeln und dichotom prüfen
+  df[[group_var]] <- factor(df[[group_var]])
+  is_factor(df[[group_var]], group_var)
+  is_dichotom(df[[group_var]], group_var)
+  
+  # NA lokal entfernen 
+  df <- remove_na(df, c(metric_var, group_var))
+  
+  out <- by(df[[metric_var]], df[[group_var]], function(x) {
     c(n = length(x), mean = mean(x), sd = sd(x))
-  )
+  })
   
   data.frame(
     group = names(out),
@@ -159,13 +176,10 @@ plot_categorical_faceted <- function(data, var_x, var_fill, var_facet1,
   vars <- c(var_x, var_fill, var_facet1, var_facet2)
   # Prüfen ob vars leer ist
   vars <- vars[!is.null(vars)]
+  var_exist(data,vars)
   
   # Prüft anhand von Faktor ob Variable kategorial ist
-  for (v in vars) {
-    if (!is.factor(data[[v]])) {
-      stop(paste("Variable", v, "ist nicht kategorial."))
-    }
-  }
+  for (v in vars) is_factor(data[[v]],v)
   
 # Eigentliche Funktion um facettiertes Balkendiagramm zu plotten
   p <- ggplot(
