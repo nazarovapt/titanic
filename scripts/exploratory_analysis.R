@@ -331,7 +331,29 @@ plot_categorical_faceted(df5,
 # =============================================================================
 
 # =============================================================================
-# 6. 
+# 6. Weitere Visualisierung
+# Unterscheidet sich das Alter der Passagiere zwischen den drei Klassen?
+
+# Lokale Kopie 
+df6 <- titanic
+df6$Pclass <- factor(df6$Pclass)
+df6$Age    <- as.numeric(as.character(df6$Age))
+
+# Deskriptive Statistik
+age_stats <- metric_by_category(df6, "Age", "Pclass")
+
+# Boxplot
+boxplot(Age ~ Pclass, data = df6,
+        col = c("lightblue", "lightgreen", "lightgray"),
+        main = "Alter nach Passagierklasse",
+        xlab = "Passagierklasse", ylab = "Alter")
+
+age_stats
+
+# Interpretation:
+# Passagiere der ersten Klasse sind im Median älter als die der dritten Klasse.
+# Die Streuung ist ähnlich, aber in der dritten Klasse gibt es einige sehr junge 
+# Passagiere.
 # =============================================================================
 
 
