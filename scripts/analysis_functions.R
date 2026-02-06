@@ -25,6 +25,7 @@ source("helper_functions.R")
 #           max      - Maximum
 
 numSummary <- function(df, variablen) {
+  var_exist(df,variablen)
   result <- data.frame()
   
   for (var in variablen) {
@@ -56,6 +57,8 @@ numSummary <- function(df, variablen) {
 #           n        - absolute Häufigkeit
 #           percent  - relative Häufigkeit in %
 catSummary <- function(df, var) {
+  var_exist(df,var)
+  is_factor(df[[var]], var)
   x <- df[[var]]
   counts <- table(x)
   percent <- round(100 * counts / sum(counts), 1)
@@ -65,7 +68,7 @@ catSummary <- function(df, var) {
     n = as.integer(counts),
     percent = as.numeric(percent),
     row.names = NULL,
-    stringsAsFactors = FALSE
+    #stringsAsFactors = FALSE
   )
 }
 # =============================================================================
