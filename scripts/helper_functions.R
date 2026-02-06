@@ -1,6 +1,8 @@
+# ============================================================================= 
 # Titel:    Hilfsfunktion zur deskriptiven Analyse und Visualisierung des 
 #           Titanic-Datensatzes
 # Autoren:  Leticia Mbong Kwanga
+# ============================================================================= 
 
 # Diese Hilfsfunktion entfernt alle NA-Werte
 remove_na <- function(df, vars) {
