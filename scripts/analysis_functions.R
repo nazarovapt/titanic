@@ -208,3 +208,38 @@ plot_categorical_faceted <- function(data, var_x, var_fill, var_facet1,
   return(p)
 }
 # =============================================================================
+# (vi)
+# metric by category berechnet deskriptive Statistiken einer metrischen Variable
+# pro Kategorie
+
+metric_by_category <- function(df, metric_var, cat_var) {
+  
+  # Prüfungen
+  var_exist(df, c(metric_var, cat_var))
+  is_numeric(df[[metric_var]], metric_var)
+  is_factor(df[[cat_var]], cat_var)
+  
+  # NA entfernen
+  d <- remove_na(df, c(metric_var, cat_var))
+  
+  # Levels der kategorialen Variable
+  groups <- levels(d[[cat_var]])
+  
+  # Deskriptive Statistik pro Kategorie
+  stats_list <- lapply(groups, function(g) {
+    x <- d[[metric_var]][d[[cat_var]] == g]
+    c(
+      n = length(x),
+      mean = round(mean(x), 2),
+      sd = round(sd(x), 2)
+    )
+  })
+  
+  # Zusammenfügen als Dataframe
+  stats_df <- do.call(rbind, stats_list)
+  rownames(stats_df) <- groups
+  return(stats_df)
+}
+# =============================================================================
+
+
