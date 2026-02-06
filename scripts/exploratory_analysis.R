@@ -1,9 +1,10 @@
 # =============================================================================
 # Titel:    Deskriptive Analyse und Visualisierung des aufgeräumten 
 #           Titanic-Datensatzes
-# Autoren:  Heetae Kim, CIA, Nazarov Sergei
+# Autoren:  Heetae Kim (i - iii), 
+#           Leticia Kwanga (iv - vi), 
+#           Nazarov Sergei (LaTeX)
 # =============================================================================
-
 
 # vorbereiteter Datensatz und Analysefunktionen laden
 titanic <- read.csv("../titanic_new.csv", stringsAsFactors = TRUE)
@@ -21,9 +22,11 @@ source("analysis_functions.R")
 # 1. Deskriptive Statistiken für metrische Variablen (Age, Fare, SibSp, Parch)
 # 2. Deskriptive Statistiken für kategoriale Variablen (Survived, Sex, Pclass)
 # 3. Zusammenhang zwischen zwei kategorialen Variablen (z.B. Survived und Sex)
-# 4.
-# 5.
-# 6.
+# 4. Bivariate deskriptive Statistik: metrisch × dichotom (z.B. Age und Fare)
+# 5. Visualisierung von drei oder vier kategorialen Variablen (z.B. Pclass, 
+#    Embarked, Survived, Sex)
+# 6. Analyse einer metrischen Variable nach kategorialer Gruppierung (z.B. Age 
+#    nach Passagierklasse)
 # =============================================================================
 
 # =============================================================================
@@ -240,15 +243,118 @@ par(xpd = FALSE)
 # =============================================================================
 
 # =============================================================================
-# 4. 
+# 4. Bivariate deskriptive Statistik: metrisch × dichotom
+# Unterscheidet sich das Alter und der Ticketpreis der Passagiere in 
+# Abhängigkeit vom Überlebensstatus?
+
+# Lokale Kopie
+df4 <- titanic
+
+# Typzuweisungen
+df4$Survived <- factor(df4$Survived, levels = c(0,1),
+                       labels = c("Nicht überlebt","Überlebt"))
+df4$Age  <- as.numeric(as.character(df4$Age))
+df4$Fare <- as.numeric(as.character(df4$Fare))
+
+# NA lokal entfernen
+df4 <- remove_na(df4, c("Age", "Fare", "Survived"))
+
+# Deskriptive Statistik
+age_survival_summary  <- metricDichoSummary(df4, "Age", "Survived")
+fare_survival_summary <- metricDichoSummary(df4, "Fare", "Survived")
+
+# Boxplots
+par(mfrow = c(1,2))
+boxplot(Age ~ Survived, data = df4,
+        names = levels(df4$Survived),
+        col = c("lightgray","lightgreen"),
+        main = "Alter nach Überlebensstatus",
+        xlab = "Überlebensstatus", ylab = "Alter")
+
+boxplot(Fare ~ Survived, data = df4,
+        names = levels(df4$Survived),
+        col = c("lightgray","lightgreen"),
+        main = "Ticketpreis nach Überlebensstatus",
+        xlab = "Überlebensstatus", ylab = "Ticketpreis")
+par(mfrow = c(1,1))
+
+age_survival_summary
+fare_survival_summary
+
+# Interpretation:
+# Beide Boxplots zeigen deutliche Unterschiede zwischen Überlebenden und
+# Nicht-Überlebenden. Überlebende sind im Median jünger und haben im
+# Durchschnitt höhere Ticketpreise gezahlt. Dies deutet darauf hin,
+# dass sowohl Alter als auch finanzieler Status einen Einfluss
+# auf die Überlebenswahrscheinlichkeit hatten.
 # =============================================================================
 
 # =============================================================================
-# 5. 
+# 5. Visualisierung von drei bzw. vier kategorialen Variablen
+# Wie hängen Passagierklasse, Einschiffungshafen und Überlebensstatus
+# zusammen und unterscheidet sich das nach Geschlecht?
+
+# Lokale Kopie
+df5 <- titanic
+df5$Pclass   <- factor(df5$Pclass)
+df5$Survived <- factor(df5$Survived, levels = c(0,1),
+                       labels = c("Nicht überlebt","Überlebt"))
+df5$Embarked <- factor(df5$Embarked)
+df5$Sex      <- factor(df5$Sex)
+
+# Facettiertes Balkendiagramm: 3 Variablen
+plot_categorical_faceted(df5,
+                         var_x = "Pclass",
+                         var_fill = "Survived",
+                         var_facet1 = "Embarked") + 
+  ggtitle("Überlebensstatus nach Passagierklasse und Einschiffungshafen")
+
+# Interpretation:
+# Das facettierte Diagramm zeigt, dass der Überlebensstatus stark von der
+# Passagierklasse abhängt: Passagiere der 1. Klasse überleben häufiger,
+# während Passagiere der 3. Klasse am seltensten überleben. Zudem unterscheiden
+# sich die Überlebensanteile je nach Einschiffungshafen: Passagiere aus 
+# Cherbourg haben tendenziell höhere Überlebensraten als diejenigen aus
+# Southampton oder Queenstown.
+
+# Facettiertes Balkendiagramm: 4 Variablen
+plot_categorical_faceted(df5,
+                         var_x = "Pclass",
+                         var_fill = "Survived",
+                         var_facet1 = "Embarked",
+                         var_facet2 = "Sex") +   
+  ggtitle("Überlebensstatus nach Passagierklasse, Einschiffungshafen und Geschlecht")
+
+# Interpretation:
+# Unter zusätzlicher Berücksichtigung des Geschlechts zeigt sich,
+# dass Frauen in allen Klassen und Häfen höhere Überlebensanteile
+# aufweisen. Der Einfluss der Passagierklasse bleibt weiter bestehen.
 # =============================================================================
 
 # =============================================================================
-# 6. 
+# 6. Weitere Visualisierung
+# Unterscheidet sich das Alter der Passagiere zwischen den drei Klassen?
+
+# Lokale Kopie 
+df6 <- titanic
+df6$Pclass <- factor(df6$Pclass)
+df6$Age    <- as.numeric(as.character(df6$Age))
+
+# Deskriptive Statistik
+age_stats <- metric_by_category(df6, "Age", "Pclass")
+
+# Boxplot
+boxplot(Age ~ Pclass, data = df6,
+        col = c("lightblue", "lightgreen", "lightgray"),
+        main = "Alter nach Passagierklasse",
+        xlab = "Passagierklasse", ylab = "Alter")
+
+age_stats
+
+# Interpretation:
+# Passagiere der ersten Klasse sind im Median älter als die der dritten Klasse.
+# Die Streuung ist ähnlich, aber in der dritten Klasse gibt es einige sehr junge 
+# Passagiere.
 # =============================================================================
 
 
