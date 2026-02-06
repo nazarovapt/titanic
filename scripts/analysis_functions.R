@@ -14,10 +14,12 @@ source("helper_functions.R")
 # numSummary berechnet einfache deskriptive Statistiken für
 #                            metrische Variablen eines Dataframes
 #
-# Input:  df        - Datenframe mit den Variablen
+# Input:  df        - Dataframe mit den Variablen
 #         variablen - Vektor mit Spaltennamen der numerischen Variablen
 # Output: data.frame mit Spalten:
 #           variable - Name der Variable
+#           mean     - Mittelwert
+#           median   - Median
 #           sd       - Standardabweichung
 #           min      - Minimum
 #           max      - Maximum
@@ -30,9 +32,11 @@ numSummary <- function(df, variablen) {
     if (is.numeric(x)) {
       result <- rbind(result, data.frame(
         variable = var,
-        sd = sd(x, na.rm = TRUE),
-        min = min(x, na.rm = TRUE),
-        max = max(x, na.rm = TRUE)
+        mean   = mean(x, na.rm = TRUE),
+        median = median(x, na.rm = TRUE),
+        sd     = sd(x, na.rm = TRUE),
+        min    = min(x, na.rm = TRUE),
+        max    = max(x, na.rm = TRUE)
       ))
     }
   }
@@ -79,6 +83,8 @@ catSummary <- function(df, var) {
 #           percent - relative Häufigkeiten (Zeilenprozente)
 
 catBivSummary <- function(df, var1, var2) {
+  # Entfernt Zeilen mit NA
+  df <- df[complete.cases(df[, c(var1, var2)]), ]
   
   # Kreuztabelle mit absoluten Häufigkeiten
   counts <- table(df[[var1]], df[[var2]])
@@ -139,6 +145,7 @@ metricDichoSummary <- function(df, metric_var, group_var) {
 # kategorialen Variablen erstellt
   
 library(ggplot2)
+titanic_new <- read.csv("../titanic_new.csv")
 
 # Jetzt sind alle kategorialen Variablen Faktoren
 titanic_new$Anrede <- as.factor(titanic_new$Anrede)
