@@ -1,6 +1,6 @@
 # ============================================================================= 
-# Titel:    Analyse der Verkaufsdaten
-# Datei:    analyse_verkauf.R
+# Titel:    Titanic-Datensatz – Datenvorverarbeitung
+# Datei:    titanic_data_preprocessing.R
 # Autoren:  Meico Bastian Heil, Saskia Lapkowski
 # Datum:    2026-01-21
 # Zweck:    Datenaufbereitung und Auswertung
