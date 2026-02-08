@@ -139,8 +139,8 @@ titanic <- titanic [, !names(titanic) %in% c("PassengerId", "Name", "Ticket", "C
 # data.frame neu zuweisen
 titanic_new <- titanic
 
-# CSV-Datei erstellen, die den Datensatz beinhaltet
-write.csv(titanic_new, "titanic_new", row.names = FALSE)
+# RDS-Datei erstellen, die den Datensatz beinhaltet
+saveRDS(titanic_new, "titanic_new.rds")
 
 # =============================================================================
 

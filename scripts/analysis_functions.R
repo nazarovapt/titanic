@@ -68,7 +68,7 @@ catSummary <- function(df, var) {
     n = as.integer(counts),
     percent = as.numeric(percent),
     row.names = NULL,
-    #stringsAsFactors = FALSE
+    stringsAsFactors = FALSE
   )
 }
 # =============================================================================
