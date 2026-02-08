@@ -7,7 +7,7 @@
 # =============================================================================
 
 # vorbereiteter Datensatz und Analysefunktionen laden
-titanic <- read.csv("../titanic_new.csv", stringsAsFactors = TRUE)
+titanic <- readRDS("../titanic_new.rds")
 source("analysis_functions.R")
 
 # =============================================================================
